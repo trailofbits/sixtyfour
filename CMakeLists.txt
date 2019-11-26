@@ -1,0 +1,41 @@
+cmake_minimum_required(VERSION 3.7)
+project(sixtyfour LANGUAGES C)
+
+option(CUDA_BUILD "Build with CUDA Support" ON)
+
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release)
+endif()
+
+set(CMAKE_C_FLAGS "-fPIC -Wall -Wextra")
+set(CMAKE_C_FLAGS_DEBUG "-ggdb")
+set(CMAKE_C_FLAGS_RELEASE "-O3")
+
+set(SOURCES workpool.c output.c naive.c multicore.c avx512.c sse.c avx.c timing.c sixtyfour.c)
+
+set_source_files_properties(sse.c PROPERTIES COMPILE_FLAGS "-msse4")
+set_source_files_properties(avx.c PROPERTIES COMPILE_FLAGS "-mavx2")
+set_source_files_properties(avx512.c PROPERTIES COMPILE_FLAGS "-mavx512f -mavx512bw")
+
+if(CUDA_BUILD)
+  enable_language("CUDA")
+  if(CMAKE_CUDA_COMPILER)
+    set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -arch=sm_35")
+    foreach(arch 35;50;52;60;61;70;75 )
+      set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -gencode=arch=compute_${arch},code=sm_${arch}")
+    endforeach()
+    set(CUDA_HOST_COMPILATION_CPP OFF)
+    message(STATUS "Building with CUDA support")
+    add_definitions(-DCUDA_BUILD)
+    list(APPEND SOURCES gpu.cu gpu_multicore.cu gpu_common.cu)
+  else()
+    message(FATAL_ERROR "Enabled CUDA but no CUDA support found. Try doing: `CUDACXX=/usr/local/cuda/bin/nvcc cmake ..` ")
+  endif()
+else()
+  message(STATUS "Building WITHOUT CUDA support")
+  list(APPEND SOURCES gpu_stub.c)
+endif()
+
+
+add_executable(sixtyfour ${SOURCES})
+target_link_libraries(sixtyfour pthread)
