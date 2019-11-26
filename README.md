@@ -209,6 +209,173 @@ TIMING: Time to search all 64-bits: 0046Y 065D 21H 32M 51S
 }
 ```
 
+## Multicore
+Uses the best available single core method parallelized across multiple cores. The `-ncpu` and `-cpus` options select how many and which CPUs to use. By default all available CPUs are utilized.
+
+On a 32 vCPU DigitalOcean High-CPU Instance:
+
+```
+$ ./sixtyfour -v multicore MAX 0x0 0xFFF0000000
+MAIN: Checking range from: [0000000000000000] - [000000fff0000000]
+MAIN: Using method [multicore] to look for: [0xffffffffffffffff]
+MULTICORE: Found [32] enabled processors
+WORKPOOL: Using CHUNK_SIZE: [7ff80000]
+MULTICORE: Starting threads
+MULTICORE: Thread will use CPU: 0
+MULTICORE: .
+MULTICORE: Thread will use CPU: 1
+MULTICORE: .
+MULTICORE: Thread will use CPU: 2
+MULTICORE: .
+MULTICORE: Thread will use CPU: 3
+MULTICORE: .
+MULTICORE: Thread will use CPU: 4
+MULTICORE: .
+MULTICORE: Thread will use CPU: 5
+MULTICORE: .
+MULTICORE: Thread will use CPU: 6
+MULTICORE: .
+MULTICORE: Thread will use CPU: 7
+MULTICORE: .
+MULTICORE: Thread will use CPU: 8
+MULTICORE: .
+MULTICORE: Thread will use CPU: 9
+MULTICORE: .
+MULTICORE: Thread will use CPU: 10
+MULTICORE: .
+MULTICORE: Thread will use CPU: 11
+MULTICORE: .
+MULTICORE: Thread will use CPU: 12
+MULTICORE: .
+MULTICORE: Thread will use CPU: 13
+MULTICORE: .
+MULTICORE: Thread will use CPU: 14
+MULTICORE: .
+MULTICORE: Thread will use CPU: 15
+MULTICORE: .
+MULTICORE: Thread will use CPU: 16
+MULTICORE: .
+MULTICORE: Thread will use CPU: 17
+MULTICORE: .
+MULTICORE: Thread will use CPU: 18
+MULTICORE: .
+MULTICORE: Thread will use CPU: 19
+MULTICORE: .
+MULTICORE: Thread will use CPU: 20
+MULTICORE: .
+MULTICORE: Thread will use CPU: 21
+MULTICORE: .
+MULTICORE: Thread will use CPU: 22
+MULTICORE: .
+MULTICORE: Thread will use CPU: 23
+MULTICORE: .
+MULTICORE: Thread will use CPU: 24
+MULTICORE: .
+MULTICORE: Thread will use CPU: 25
+MULTICORE: .
+MULTICORE: Thread will use CPU: 26
+MULTICORE: .
+MULTICORE: Thread will use CPU: 27
+MULTICORE: .
+MULTICORE: Thread will use CPU: 28
+MULTICORE: .
+MULTICORE: Thread will use CPU: 29
+MULTICORE: .
+MULTICORE: Thread will use CPU: 30
+MULTICORE: .
+MULTICORE: Thread will use CPU: 31
+MULTICORE: .
+MULTICORE:
+MULTICORE: Waiting for worker threads
+WORKPOOL: No more pool items
+MULTICORE: Thread [7f4af2cea700] done [40792227840] ops using [AVX512]
+WORKPOOL: No more pool items
+MULTICORE: Thread [7f4af6cf2700] done [36498309120] ops using [AVX512]
+WORKPOOL: No more pool items
+MULTICORE: Thread [7f4af8cf6700] done [25763512320] ops using [AVX512]
+WORKPOOL: No more pool items
+MULTICORE: Thread [7f4af44ed700] done [40792227840] ops using [AVX512]
+WORKPOOL: No more pool items
+MULTICORE: Thread [7f4af24e9700] done [30057431040] ops using [AVX512]
+WORKPOOL: No more pool items
+MULTICORE: Thread [7f4afb4fb700] done [27910471680] ops using [AVX512]
+WORKPOOL: No more pool items
+MULTICORE: Thread [7f4af0ce6700] done [30057431040] ops using [AVX512]
+WORKPOOL: No more pool items
+MULTICORE: Thread [7f4afbcfc700] done [34351349760] ops using [AVX512]
+WORKPOOL: No more pool items
+MULTICORE: Thread [7f4af74f3700] done [19322634240] ops using [AVX512]
+WORKPOOL: No more pool items
+MULTICORE: Thread [7f4af04e5700] done [36498309120] ops using [AVX512]
+WORKPOOL: No more pool items
+MULTICORE: Thread [7f4aef4e3700] done [36498309120] ops using [AVX512]
+WORKPOOL: No more pool items
+MULTICORE: Thread [7f4aefce4700] done [36498309120] ops using [AVX512]
+WORKPOOL: No more pool items
+MULTICORE: Thread [7f4af34eb700] done [38645268480] ops using [AVX512]
+WORKPOOL: No more pool items
+MULTICORE: Thread [7f4aee4e1700] done [38645268480] ops using [AVX512]
+WORKPOOL: No more pool items
+MULTICORE: Thread [7f4aed4df700] done [38645268480] ops using [AVX512]
+WORKPOOL: No more pool items
+MULTICORE: Thread [7f4aedce0700] done [38645268480] ops using [AVX512]
+WORKPOOL: No more pool items
+MULTICORE: Thread [7f4af3cec700] done [38645268480] ops using [AVX512]
+WORKPOOL: No more pool items
+MULTICORE: Thread [7f4aeece2700] done [38645268480] ops using [AVX512]
+WORKPOOL: No more pool items
+MULTICORE: Thread [7f4af7cf4700] done [47233105920] ops using [AVX512]
+WORKPOOL: No more pool items
+MULTICORE: Thread [7f4af84f5700] done [23616552960] ops using [AVX512]
+WORKPOOL: No more pool items
+MULTICORE: Thread [7f4af64f1700] done [30057431040] ops using [AVX512]
+WORKPOOL: No more pool items
+MULTICORE: Thread [7f4afc4fd700] done [38645268480] ops using [AVX512]
+WORKPOOL: No more pool items
+MULTICORE: Thread [7f4af1ce8700] done [36498309120] ops using [AVX512]
+WORKPOOL: No more pool items
+MULTICORE: Thread [7f4af9cf8700] done [25763512320] ops using [AVX512]
+WORKPOOL: No more pool items
+MULTICORE: Thread [7f4af4cee700] done [32204390400] ops using [AVX512]
+WORKPOOL: No more pool items
+MULTICORE: Thread [7f4afccfe700] done [34351349760] ops using [AVX512]
+WORKPOOL: No more pool items
+MULTICORE: Thread [7f4af5cf0700] done [45086146560] ops using [AVX512]
+WORKPOOL: No more pool items
+MULTICORE: Thread [7f4afa4f9700] done [27910471680] ops using [AVX512]
+WORKPOOL: No more pool items
+MULTICORE: Thread [7f4af94f7700] done [42939187200] ops using [AVX512]
+WORKPOOL: No more pool items
+MULTICORE: Thread [7f4afacfa700] done [27910471680] ops using [AVX512]
+WORKPOOL: No more pool items
+MULTICORE: Thread [7f4af14e7700] done [36498309120] ops using [AVX512]
+WORKPOOL: No more pool items
+MULTICORE: Thread [7f4af54ef700] done [23616552960] ops using [AVX512]
+MULTICORE: Finished. Stopping threads...
+MULTICORE: Waiting for threads to finish last work items
+MAIN: Secret not found in search space
+TIMING: Method: multicore
+TIMING: Elapsed Time: 00:00:04.939
+TIMING: Estimated ops per:
+    millisecond:            222563918
+         second:         222563918267
+         minute:       13353835096011
+           hour:      801230105760680
+            day:    19229522538256327
+TIMING: Time to search all 64-bits: 0002Y 229D 07H 01M 45S
+{
+  "finishwhen": "0002Y 229D 07H 01M 45S",
+  "method": "multicore",
+  "etime": "00:00:04.939",
+  "ms":  "222563918.266856",
+  "sec": "222563918266.855639",
+  "min": "13353835096011.338327",
+  "hour":"801230105760680.299622",
+  "day": "19229522538256327.191406"
+}
+```
+
+
 ## GPU 
 
 These days our machines also have a GPU, why waste it?  A GeForce GT 1030 (cost: ~$85 USD) about as fast as 40 Sandy Bridge Xeons. Fortunately, this problem is embarassingly parallel and GPU friendly.
