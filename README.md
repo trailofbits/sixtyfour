@@ -4,7 +4,7 @@ How fast can we brute force a comparison against a 64-bit integer?
 
 Can we get it to a reasonable time with easily accessible computation? How much will it cost?
 
-This code accompanies a Trail of Bits blog post, [64 bits ought to be enough for anybody!](), that discusses those topics and more.
+This code accompanies a Trail of Bits blog post, [64 bits ought to be enough for anybody!](https://blog.trailofbits.com/2019/11/27/64-bits-ought-to-be-enough-for-anybody/), that discusses those topics and more.
 
 The `sixtyfour` tool measures how fast comparisons can happen using:
 
