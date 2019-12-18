@@ -17,15 +17,35 @@
 #include <stdint.h>
 #include <inttypes.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include "output.h"
-#include <emmintrin.h>
-#include <xmmintrin.h>
-#include <smmintrin.h>
 #include "sse.h"
 
 #ifndef __FILE_NAME__
 #define __FILE_NAME__ "SSE"
 #endif
+
+#if !defined(__x86_64__)
+
+bool sse_check(void) {
+  return false;
+}
+
+uint64_t sse_do_range(
+    uint64_t start, uint64_t end,
+    uint64_t secret, bool *found)
+{
+  (void)(start);
+  (void)(end);
+  (void)(secret);
+  *found = false;
+  return 0;
+}
+#else
+
+#include <emmintrin.h>
+#include <immintrin.h>
+#include <smmintrin.h>
 
 bool sse_check(void) {
   return __builtin_cpu_supports("sse4.1");
@@ -132,6 +152,7 @@ uint64_t sse_do_range(
 
   return out*OPS_PER_LOOP;
 }
+#endif
 
 uint64_t sse_method(uint64_t secret, bool *found, uint64_t h_start, uint64_t h_end) {
   if (!sse_check()) {

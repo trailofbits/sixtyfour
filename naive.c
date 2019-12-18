@@ -28,6 +28,14 @@ static bool eval(uint64_t input, uint64_t secret) {
   return secret == input;
 }
 
+uint64_t naive_do_range(uint64_t start,
+                        uint64_t end,
+                        uint64_t secret,
+                        bool *found)
+{
+  return naive_method(secret, found, start, end);
+}
+
 uint64_t naive_method(uint64_t secret, bool *found, uint64_t h_start, uint64_t h_end) {
   *found = false;
 
