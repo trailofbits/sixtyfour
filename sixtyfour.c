@@ -32,6 +32,7 @@
 #include "sse.h"
 #include "avx.h"
 #include "avx512.h"
+#include "neon.h"
 #include "gpu.h"
 #include "gpu_multicore.h"
 
@@ -42,6 +43,7 @@ enum Methods {
   multicore,
   sse4,
   avx512,
+  neon,
   gpu,
   gpu_multicore
 };
@@ -61,6 +63,7 @@ method_info_t METHODS[] = {
   {sse4,          sse_check,            "sse",            "SSE4.1 vectorized loop [2 64-bit quantities per iteration]", sse_method},
   {avx2,          avx2_check,           "avx2",           "AVX2 vectorized loop   [4 64-bit quantities per iteration]", avx2_method},
   {avx512,        avx512_check,         "avx512",         "AVX512 vectorized loop [8 64-bit quantities per iteration]", avx512_method},
+  {neon,          neon_check,           "neon",           "ARM NEON vectorized loop [2 64-bit quantities per iteration]", neon_method},
   {multicore,     multicore_check,      "multicore",      "Best vectorized method in parallel on all cores", multicore_method},
   {gpu,           gpu_check,            "gpu",            "Run on all available NVIDIA GPUs", gpu_method},
   {gpu_multicore, gpu_multicore_check,  "gpu-multicore",  "Use all available GPUs and CPUs", gpu_multicore_method},

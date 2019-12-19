@@ -38,6 +38,8 @@
 #include "avx.h"
 #include "avx512.h"
 #include "sse.h"
+#include "neon.h"
+#include "naive.h"
 #include "multicore.h"
 #include "common.h"
 #include "workpool.h"
@@ -217,19 +219,21 @@ static void* search_thread(void *arg) {
   char *method = NULL;
   targ->found = false;
 
-  if(__builtin_cpu_supports("avx512bw")) {
+  if(avx512_check()) {
     method = "AVX512";
     method_func = avx512_do_range;
-  } else if(__builtin_cpu_supports("avx2")) {
+  } else if(avx2_check()) {
     method = "AVX2";
     method_func = avx2_do_range;
-  } else if(__builtin_cpu_supports("sse4.1")) {
+  } else if(sse_check()) {
     method = "SSE4.1";
     method_func = sse_do_range;
+  } else if(neon_check()) {
+    method = "NEON";
+    method_func = neon_do_range;
   } else {
-    log_error(__FILE_NAME__, "Neither AVX512 nor AVX2 nor SSE4.1 are supported on this CPU. Exiting\n");
-    method_func = NULL;
-    exit(-1);
+    method = "NAIVE";
+    method_func = naive_do_range;
   }
 
   PoolStatus is_done = workpool_get_chunk(&start, &stop);

@@ -18,12 +18,11 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-uint64_t naive_method(uint64_t secret, bool *found, uint64_t h_start,
-                      uint64_t h_end);
 
-bool naive_check(void);
+uint64_t neon_do_range(
+    uint64_t start, uint64_t end,
+    uint64_t secret, bool *found);
 
-uint64_t naive_do_range(uint64_t start,
-                        uint64_t end,
-                        uint64_t secret,
-                        bool *found);
+uint64_t neon_method(uint64_t secret, bool *found, uint64_t h_start, uint64_t h_end);
+
+bool neon_check(void);

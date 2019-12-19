@@ -12,6 +12,7 @@ The `sixtyfour` tool measures how fast comparisons can happen using:
 * SSE4.1 vectorization. [see `sse.c`]
 * AVX2 vectorization. [see `avx.c`]
 * AVX-512 vectorization. [see `avx512.c`]
+* ARM NEON vectorization. [see `neon.c`]
 * Multiple cores. [see `multicore.c`]
 * GPUs using CUDA. [see `gpu.cu`]
 * GPUs and CPUs working together. [see `gpu_multicore.cu`]
@@ -47,14 +48,12 @@ Sometimes CMake can't find `nvcc`; in that case, try manually specifying the pat
 CUDACXX=/usr/local/cuda/bin/nvcc cmake -DCUDA_BUILD=True ..
 ```
 
-Right now it only builds on x86 due to uses of x86-specific feature flags.
+Sixtyfour should build on ARMv864 (AArch64) and AMD64 (x86-64) platforms.
 
 ## Pull Requests Wanted
 
 Some things I would love to add but do not have time for:
 
-* Support for architecture neutral builds.
-* Support for ARM (v7 and v8) and ARM's NEON.
 * Support for OpenCL.
 * Fixes to the many bugs I am sure lurk in this code.
 
@@ -206,6 +205,37 @@ TIMING: Time to search all 64-bits: 0046Y 065D 21H 32M 51S
   "min": "759985614159.292035",
   "hour":"45599136849557.522121",
   "day": "1094379284389380.530884"
+}
+```
+
+## ARM NEON
+
+ARM's NEON only has 128-bit wide registers, but there are 32 of them. 
+
+Result from an NVIDIA Jetson TX2:
+```
+$ ./sixtyfour -v neon 0xFF0000000 0x0 0xFFF00000
+MAIN: Checking range from: [0000000000000000] - [00000000fff00000]
+MAIN: Using method [neon] to look for: [0x0000000ff0000000]
+MAIN: Secret not found in search space
+TIMING: Method: neon
+TIMING: Elapsed Time: 00:00:01.686
+TIMING: Estimated ops per:
+    millisecond:              2546808
+         second:           2546808256
+         minute:         152808495374
+           hour:        9168509722420
+            day:      220044233338078
+TIMING: Time to search all 64-bits: 0229Y 246D 23H 45M 20S
+{
+  "finishwhen": "0229Y 246D 23H 45M 20S",
+  "method": "neon",
+  "etime": "00:00:01.686",
+  "ms":  "2546808.256228",
+  "sec": "2546808256.227758",
+  "min": "152808495373.665480",
+  "hour":"9168509722419.928826",
+  "day": "220044233338078.291815"
 }
 ```
 

@@ -17,15 +17,33 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdio.h>
-#include <emmintrin.h>
-#include <immintrin.h>
-#include <smmintrin.h>
+#include <stdlib.h>
 #include "avx.h" 
 #include "output.h"
 
 #ifndef __FILE_NAME__
 #define __FILE_NAME__ "AVX"
 #endif
+
+#if !defined(__x86_64__)
+bool avx2_check(void) {
+  return false;
+}
+uint64_t avx2_do_range(
+    uint64_t start, uint64_t end,
+    uint64_t secret, bool *found)
+{
+  (void)(start);
+  (void)(end);
+  (void)(secret);
+  *found = false;
+  return 0;
+}
+#else
+
+#include <emmintrin.h>
+#include <immintrin.h>
+#include <smmintrin.h>
 
 bool avx2_check(void) {
   return __builtin_cpu_supports("avx2");
@@ -143,6 +161,7 @@ uint64_t avx2_do_range(
   // number of actual comparisons done
   return out*OPS_PER_LOOP;
 }
+#endif
 
 uint64_t avx2_method(uint64_t secret, bool *found, uint64_t h_start, uint64_t h_end) {
   if (!avx2_check()) {
